@@ -1,0 +1,23 @@
+<header class="app-header">
+  <div class="container">
+    <div class="logo" (click)="goToHome()">
+      <img src="/images/20943613.jpg" alt="Logo Chrono Explorer" class="logo-img">
+      <span class="brand-name">Chrono Explorer</span>
+    </div>
+
+    <nav class="nav-links" [class.open]="menuOpen">
+      <a (click)="goToTimeline()">Ligne du temps</a>
+      <div class="dropdown">
+        <span (click)="toggleAccountMenu()">👤</span>
+        <div class="dropdown-menu" [class.show]="accountMenuOpen">
+          <a (click)="goToLogin()">Connexion</a>
+          <a (click)="goToRegister()">Inscription</a>
+          <a (click)="goToSetting()">Profil</a>
+          <a (click)="goToAdminPage()">Moderation</a>
+        </div>
+      </div>
+    </nav>
+
+    <button class="menu-toggle" (click)="toggleMenu()">☰</button>
+  </div>
+</header>

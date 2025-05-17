@@ -1,0 +1,19 @@
+<div class="moderation-container">
+    <h2>Modération des Commentaires</h2>
+  
+    <div *ngIf="loading">Chargement...</div>
+  
+    <div *ngIf="!loading && comments.length === 0">
+      Aucun commentaire en attente.
+    </div>
+  
+    <div *ngFor="let comment of comments" class="comment-card">
+      <h3>{{ comment.eventTitle }}</h3>
+      <p>{{ comment.content }}</p>
+      <div class="actions">
+        <button (click)="approveComment(comment.id)">Valider</button>
+        <button class="reject" (click)="rejectComment(comment.id)">Rejeter</button>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,18 @@
+<div class="admin-container">
+    <h2>Gestion des commentaires</h2>
+  
+    <div *ngFor="let comment of comments" class="comment-card">
+      <div class="comment-header">
+        <span class="user">{{ comment.user }}</span>
+        <span class="status" [ngClass]="comment.status">{{ comment.status | titlecase }}</span>
+      </div>
+  
+      <p>{{ comment.text }}</p>
+  
+      <div class="actions" *ngIf="comment.status === 'en attente'">
+        <button (click)="validateComment(comment)">Valider</button>
+        <button class="reject" (click)="rejectComment(comment)">Rejeter</button>
+      </div>
+    </div>
+  </div>
+  

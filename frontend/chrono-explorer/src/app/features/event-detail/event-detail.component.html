@@ -1,0 +1,42 @@
+<div *ngIf="event" class="event-detail-container">
+  <div class="event-main">
+    <div class="image-container" *ngIf="event.imageUrl">
+      <img [src]="event.imageUrl" alt="Image principale de l'événement">
+    </div>
+
+    <div class="event-info">
+      <h1>{{ event.title }}</h1>
+      <p><strong>Description :</strong> {{ event.description }}</p>
+      <p><strong>Lieu :</strong> {{ event.location }}</p>
+      <p><strong>Date de début :</strong> {{ event.startDate }}</p>
+      <p><strong>Date de fin :</strong> {{ event.endDate }}</p>
+      <p><strong>Thématique :</strong> {{ event.theme }}</p>
+      <p><strong>Catégorie :</strong> {{ event.category }}</p>
+      <p><strong>Civilisation :</strong> {{ event.civilization }}</p>
+      <h2>Contenu détaillé</h2>
+      <p>{{ event.detailedContent }}</p>
+    </div>
+  </div>
+
+  <h3>Archives multimédia</h3>
+  <div *ngIf="event.archives?.length > 0" class="archives">
+    <div *ngFor="let archive of event.archives" class="archive-item">
+      <ng-container [ngSwitch]="archive.type">
+        <img *ngSwitchCase="'image'" [src]="archive.url" [alt]="archive.description" class="archive-media">
+        <video *ngSwitchCase="'video'" [src]="archive.url" controls class="archive-media"></video>
+        <audio *ngSwitchCase="'audio'" [src]="archive.url" controls></audio>
+        <a *ngSwitchDefault [href]="archive.url" target="_blank">{{ archive.description }}</a>
+      </ng-container>
+      <p>{{ archive.description }}</p>
+    </div>
+  </div>
+  <div *ngIf="!event.archives?.length">
+    <p>Aucune archive disponible pour cet événement.</p>
+  </div>
+
+  <!-- Champ de commentaire -->
+  <div class="comment-section">
+    <input type="text" placeholder="Ajoutez un commentaire..." />
+    <button>Envoyer</button>
+  </div>
+</div>

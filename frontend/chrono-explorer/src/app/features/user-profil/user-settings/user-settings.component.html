@@ -1,0 +1,42 @@
+<div class="settings-wrapper">
+  <!-- Image à gauche -->
+  <div class="settings-image">
+    <img src="/images/20943640.jpg" alt="Illustration Profil" />
+  </div>
+
+  <!-- Formulaire à droite -->
+  <div class="settings-container">
+    <div class="avatar-circle">{{ firstLetter }}</div>
+
+    <h2>Paramètres du profil</h2>
+
+    <form (ngSubmit)="updateSettings()">
+      <div class="form-group">
+        <label for="firstName">Prénom</label>
+        <input id="firstName" type="text" [(ngModel)]="user.firstName" name="firstName" required />
+      </div>
+
+      <div class="form-group">
+        <label for="lastName">Nom</label>
+        <input id="lastName" type="text" [(ngModel)]="user.lastName" name="lastName" required />
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input id="email" type="email" [value]="user.email" readonly class="readonly-field" />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Nouveau mot de passe</label>
+        <input id="password" type="password" [(ngModel)]="user.password" name="password" />
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword">Confirmer le mot de passe</label>
+        <input id="confirmPassword" type="password" [(ngModel)]="user.confirmPassword" name="confirmPassword" />
+      </div>
+
+      <button type="submit">Enregistrer</button>
+    </form>
+  </div>
+</div>

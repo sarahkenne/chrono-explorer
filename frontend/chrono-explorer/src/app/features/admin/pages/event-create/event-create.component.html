@@ -1,0 +1,45 @@
+<div class="create-container">
+    <h2>Créer un Événement Historique</h2>
+  
+    <form (ngSubmit)="submitEvent()">
+      <label>Titre de l'événement</label>
+      <input type="text" [(ngModel)]="event.title" name="title" required>
+  
+      <label>Description courte</label>
+      <textarea [(ngModel)]="event.description" name="description" required></textarea>
+  
+      <label>Lieu</label>
+      <input type="text" [(ngModel)]="event.location" name="location" required>
+  
+      <label>Date de début</label>
+      <input type="date" [(ngModel)]="event.startDate" name="startDate" required>
+  
+      <label>Date de fin</label>
+      <input type="date" [(ngModel)]="event.endDate" name="endDate" required>
+  
+      <label>Contenu détaillé</label>
+      <textarea [(ngModel)]="event.detailedContent" name="detailedContent" required></textarea>
+  
+      <label>Thématique</label>
+      <input type="text" [(ngModel)]="event.theme" name="theme" required>
+  
+      <label>Catégorie</label>
+      <select [(ngModel)]="event.category" name="category" required>
+        <option *ngFor="let cat of categories" [value]="cat">{{cat}}</option>
+      </select>
+  
+      <label>Civilisation</label>
+      <select [(ngModel)]="event.civilization" name="civilization" required>
+        <option *ngFor="let civ of civilizations" [value]="civ">{{civ}}</option>
+      </select>
+  
+      <label>Image (optionnelle)</label>
+      <input type="file" (change)="onFileSelected($event)">
+  
+      <label>Archives multimédia (liens)</label>
+      <input type="text" [(ngModel)]="event.multimediaArchive" name="multimediaArchive">
+  
+      <button type="submit">Créer l'événement</button>
+    </form>
+  </div>
+  

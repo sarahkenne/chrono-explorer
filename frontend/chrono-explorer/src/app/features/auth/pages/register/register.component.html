@@ -1,0 +1,40 @@
+<div class="register-page">
+  <div class="register-image">
+    <img src="/images/basic_earth_map_continents_app.jpg" alt="Image décorative">
+  </div>
+  <div class="register-container">
+    <div class="register-card">
+      <h2>Créer un compte</h2>
+      <form (ngSubmit)="register()">
+        <div class="form-group">
+          <label for="nom">Nom</label>
+          <input id="nom" type="text" [(ngModel)]="nom" name="nom" required />
+        </div>
+
+        <div class="form-group">
+          <label for="prenom">Prénom</label>
+          <input id="prenom" type="text" [(ngModel)]="prenom" name="prenom" required />
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input id="email" type="email" [(ngModel)]="email" name="email" required />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Mot de passe</label>
+          <input id="password" type="password" [(ngModel)]="password" name="password" required />
+        </div>
+
+        <div class="form-group">
+          <label for="confirmPassword">Confirmer le mot de passe</label>
+          <input id="confirmPassword" type="password" [(ngModel)]="confirmPassword" name="confirmPassword" required />
+        </div>
+
+        <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+        <button type="submit" class="btn-primary">S'inscrire</button>
+      </form>
+    </div>
+  </div>
+</div>
