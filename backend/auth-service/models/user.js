@@ -36,5 +36,10 @@ const User = sequelize.define('Utilisateurs', {
   createdAt: 'created_at',
   updatedAt: 'updated_at'
 });
+User.prototype.toSafeJSON = function () {
+  const user = this.toJSON();
+  delete user.mot_de_passe;
+  return user;
+};
 
 module.exports = User;
