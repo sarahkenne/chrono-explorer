@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginComponent } from '../../../features/auth/pages/login/login.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
-
+  imports: [RouterLink],
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
@@ -55,5 +56,11 @@ export class HeaderComponent {
   }
   goToAdminPage(){
     this.router.navigate(['/admin/moderation'])
+    this.closeMenus();
+  }
+
+  goToCreateEvent(){
+    this.router.navigate(['admin/create-event'])
+    this.closeMenus();
   }
 }

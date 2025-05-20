@@ -10,10 +10,11 @@
       <div class="dropdown">
         <span (click)="toggleAccountMenu()">👤</span>
         <div class="dropdown-menu" [class.show]="accountMenuOpen">
-          <a (click)="goToLogin()">Connexion</a>
-          <a (click)="goToRegister()">Inscription</a>
-          <a (click)="goToSetting()">Profil</a>
-          <a (click)="goToAdminPage()">Moderation</a>
+          <a routerLink="/login" (click)="closeMenus()">Connexion</a>
+          <a routerLink="/register" (click)="closeMenus()" >Inscription</a>
+          <a routerLink="/settings" (click)="closeMenus()">Profil</a>
+          <a routerLink="/admin/moderation" (click)="closeMenus()">Moderation</a>
+          <a routerLink="/admin/create-event" (click)="closeMenus()">ajouter evenement</a>
         </div>
       </div>
     </nav>

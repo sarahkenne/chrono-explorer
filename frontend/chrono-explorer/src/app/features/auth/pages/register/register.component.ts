@@ -1,58 +1,47 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, FormGroup, ReactiveFormsModule, Validators, FormControl,  ValidationErrors, AbstractControl } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [FormsModule, RouterModule, CommonModule],
+  imports: [FormsModule, RouterModule, CommonModule, ReactiveFormsModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
+
 export class RegisterComponent {
-  nom = '';
-  prenom = '';
-  email = '';
-  password = '';
-  confirmPassword = '';
-  errorMessage = '';
+
+  formProfil = new FormGroup({
+    nom: new FormControl("", [Validators.required, Validators.minLength(3)]),
+    prenom: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    confirmPass: new FormControl('', [Validators.required])
+  }, { validators: this.passwordMatchValidator });
 
   constructor(private router: Router) {}
 
+  // Validation personnalisé pour le confirm password
+  passwordMatchValidator(group: AbstractControl): ValidationErrors | null {
+    const password = group.get('password')?.value;
+    const confirmPass = group.get('confirmPass')?.value;
+    return password === confirmPass ? null : { passwordMismatch: true };
+  }
+
   register() {
-    const emailRegex = /^((?!\.)[\w-_.]*[^.])@[\w-]+(\.\w+)+$/;
-
-    if (!this.nom || !this.prenom || !this.email || !this.password || !this.confirmPassword) {
-      this.errorMessage = 'Tous les champs sont obligatoires.';
-      console.log("Erreur - champs manquants");
-      return;
+    if (this.formProfil.valid) {
+      const formData = this.formProfil.value;
+      console.log("Formulaire valide :", formData);
+      alert(`Merci ${formData.prenom} :)`);
+      this.formProfil.reset();
+      this.router.navigate(['/login']);
+    } else {
+      console.log("Formulaire invalide");
     }
-
-    if (!emailRegex.test(this.email)) {
-      this.errorMessage = 'Adresse email invalide.';
-      console.log("Erreur - email invalide");
-      return;
-    }
-
-    if (this.password !== this.confirmPassword) {
-      this.errorMessage = 'Les mots de passe ne correspondent pas.';
-      console.log("Erreur - mot de passe");
-      return;
-    }
-
-   // Simulation création compte
-    console.log('Compte créé :', this.nom, this.prenom, this.email);
-    this.errorMessage = '';
-
-    // Affichage de l'alerte personnalisée
-    alert(`Bienvenue ${this.prenom} !`);
-
-// Redirection vers la page de connexion
-this.router.navigate(['/login']);
-
-
-
   }
 }
+

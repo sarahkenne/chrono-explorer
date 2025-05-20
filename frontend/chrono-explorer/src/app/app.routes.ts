@@ -1,43 +1,32 @@
 import { Routes } from '@angular/router';
-
+import { TimelineViewComponent } from './features/timeline/components/timeline-view/timeline-view.component';
+import { LoginComponent } from './features/auth/pages/login/login.component';
+import { RegisterComponent } from './features/auth/pages/register/register.component';
+import { SettingsComponent } from './features/user-profil/user-settings/user-settings.component';
+import { CommentModerationComponent } from './features/admin/pages/comment-moderation/comment-moderation.component';
+import { EventCreateComponent } from './features/admin/pages/event-create/event-create.component';
+import { EventDetailComponent } from './features/event-detail/event-detail.component';
+import { ForgotPasswordComponent } from './features/auth/pages/forgot-password/forgot-password.component';
 
 export const routes: Routes = [
   {
-    path: 'login',
-    loadComponent: () =>
-      import('./features/auth/pages/login/login.component').then((m) => m.LoginComponent),
+    path: 'login', component: LoginComponent
   },
   {
-    path: 'register',
-    loadComponent: () =>
-      import('./features/auth/pages/register/register.component').then((m) => m.RegisterComponent),
+    path: 'register', component: RegisterComponent
   },
   { path: '', redirectTo: 'timeline', pathMatch: 'full' },
   {
-    path: 'settings',
-    loadComponent: () => import('./features/user-profil/user-settings/user-settings.component').then(m => m.SettingsComponent),
-}, 
+    path: 'settings', component: SettingsComponent}, 
 {
-    path: 'admin/moderation',
-    loadComponent: () => import('./features/admin/pages/comment-moderation/comment-moderation.component').then(m => m.CommentModerationComponent)
-  }, 
+    path: 'admin/moderation', component: CommentModerationComponent}, 
   {
-    path: 'admin/create-event',
-    loadComponent: () => import('./features/admin/pages/event-create/event-create.component').then(m => m.EventCreateComponent)
-  },
+    path: 'admin/create-event', component: EventCreateComponent},
   {
-    path: 'events/:id',
-    loadComponent: () => import('./features/event-detail/event-detail.component').then(m => m.EventDetailComponent),
-  },
+    path: 'events/:id', component: EventDetailComponent},
   {
-    path: "timeline",
-    loadComponent: ()=>
-      import("./features/timeline/components/timeline-view/timeline-view.component").then((m)=> m.TimelineViewComponent)
-  },
+    path: "timeline", component: TimelineViewComponent},
   {
-  path: 'forgot-password',
-  loadComponent: () => import('./features/auth/pages/forgot-password/forgot-password.component').then(m => m.ForgotPasswordComponent)
-}
+  path: 'forgot-password', component: ForgotPasswordComponent}
 
-  
 ];

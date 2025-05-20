@@ -1,45 +1,44 @@
 import { Component } from '@angular/core';
-import { FormsModule,  } from '@angular/forms';
+import {  FormGroup, ReactiveFormsModule, Validators, FormControl } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { FormsModule, } from '@angular/forms';
+
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, RouterModule, CommonModule],
+  imports: [FormsModule, RouterModule, CommonModule, RouterLink, ReactiveFormsModule, ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
   email = '';
-  password = '';
-  imageLogin= "/images/basic_earth_map_continents_app.jpg";
   showPassword = false;
   errorMessage= '';
   connection = false;
 
+  profilForm = new FormGroup({
+    email: new FormControl('', [Validators.required]),
+    password: new FormControl('', [Validators.required])
+  })
+
   constructor(private router: Router) {}
 
+  
   login() {
 
-    if(!this.email || !this.password)
+    if(this.profilForm.valid)
     {
-      this.errorMessage='Tous les champs sont obiligatoire';
+      const formData = this.profilForm.value
+      console.log(formData)
+      //authentificaion jwt et redirection
     }
-    else if(this.email == "admin@gmail.com" && this.password == "admin@124"){
-        console.log('Connexion avec', this.email, this.password);
-        this.connection == true;
-        this.router.navigate(["/admin/moderation"])
+    else{
+      console.log('Error')
     }
-    else if(this.email == "user@gmail.com" && this.password== 'user@124')
-    {
-      this.connection == true;
-      this.router.navigate(["/timeline"])
-    }
-    else 
-    alert("Mot de passe ou email introuvable :(")
-   
+
   }
 
   forgotPassword() {

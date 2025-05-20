@@ -1,33 +1,56 @@
+<div class="container-fluid min-vh-100 d-flex align-items-center justify-content-center bg-light">
+  <div class="row w-100 shadow-lg rounded overflow-hidden" style="max-width: 900px;">
 
-<div class="login-page">
-  <div class="login-image">
-    <img src="/images/basic_earth_map_continents_app.jpg" alt="Image décorative">
-  </div>
-  <div class="login-container">
-    <div class="login-card">
-      <h2>Connexion</h2>
-      <form (ngSubmit)="login()">
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input id="email" type="email" [(ngModel)]="email" name="email" required />
+    <!-- Colonne image -->
+    <div class="col-md-6 d-none d-md-block p-0">
+      <img src="/images/basic_earth_map_continents_app.jpg" alt="Image décorative"
+        class="img-fluid h-100 w-100 object-fit-cover" style="object-fit: cover;">
+    </div>
+
+    <!-- Colonne formulaire -->
+    <div class="col-12 col-md-6 bg-white p-4">
+      <h2 class="mb-3 text-center">Connexion</h2>
+
+      <form [formGroup]="profilForm" (ngSubmit)="login()">
+
+        <div class="mb-3">
+          <label for="nom" class="form-label">Email:</label>
+          <input id="nom" formControlName="email" type="text" class="form-control" required />
+          <div *ngIf="profilForm.get('email')?.invalid && profilForm.get('email')?.touched" class="text-danger small">
+            champs obligatoire.
+          </div>
         </div>
 
-        <div class="form-group">
-          <label for="password">Mot de passe</label>
-          <input id="password" [type]="showPassword ? 'text' : 'password'" [(ngModel)]="password" name="password" required />
-          <button type="button" class= "togglePassword" (click)="togglePasswordVisibility()">
-            <span *ngIf="!showPassword">Afficher</span> <!-- oeil fermé -->
-            <span *ngIf="showPassword">Masquer</span> <!-- oeil ouvert -->
-          </button>
+        <div class="mb-3">
+          <label for="prenom" class="form-label">Mot de passe: </label>
+          <input id="prenom" [type]="showPassword ? 'text' : 'password'" formControlName="password" class="form-control"
+            required />
+          <div *ngIf="profilForm.get('password')?.invalid && profilForm.get('password')?.touched"
+            class="text-danger small">
+            Champs obligatoire.
+          </div>
         </div>
 
-        <button type="submit" class="btn-primary">Se connecter</button>
+        <div class="contein-pass">
+        <button type="button" class="toggle-password" (click)="togglePasswordVisibility()">
+          <span *ngIf="!showPassword">Afficher</span> <!-- pour afficher la saisie -->
+          <span *ngIf="showPassword">Masquer</span> <!-- pour masquer la saisie -->
+        </button>
+        <br>
+        <a routerLink="/forgot-password" class="forget-link">Mot de passe oublié?</a>
+        </div>
+
+
+        <div class="d-grid mt-4">
+          <button type="submit" class="btn btn-primary" [disabled]="profilForm.invalid">S'inscrire</button>
+        </div>
+
       </form>
-      <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
-      <div class="login-actions">
-        <button type="button" class="btn-link" (click)="forgotPassword()">Mot de passe oublié ?</button>
-        <button type="button" class="btn-link" (click)="createAccount()">Créer un compte</button>
+      <div class="link-other-page">
+        <a routerLink="/register">Creer un compte</a>
+        
       </div>
     </div>
+
   </div>
 </div>

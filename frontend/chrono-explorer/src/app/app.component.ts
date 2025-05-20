@@ -9,6 +9,7 @@ import { SettingsComponent } from './features/user-profil/user-settings/user-set
 import { CommentModerationComponent } from './features/admin/pages/comment-moderation/comment-moderation.component';
 import { EventCreateComponent } from './features/admin/pages/event-create/event-create.component';
 import { EventDetailComponent } from './features/event-detail/event-detail.component';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, 
@@ -21,6 +22,7 @@ import { EventDetailComponent } from './features/event-detail/event-detail.compo
     CommentModerationComponent,
     RegisterComponent,
     EventDetailComponent,
+    RouterLink, RouterLinkActive
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'

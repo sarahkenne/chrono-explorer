@@ -1,40 +1,63 @@
-<div class="register-page">
-  <div class="register-image">
-    <img src="/images/basic_earth_map_continents_app.jpg" alt="Image décorative">
-  </div>
-  <div class="register-container">
-    <div class="register-card">
-      <h2>Créer un compte</h2>
-      <form (ngSubmit)="register()">
-        <div class="form-group">
-          <label for="nom">Nom</label>
-          <input id="nom" type="text" [(ngModel)]="nom" name="nom" required />
+<div class="container-fluid min-vh-100 d-flex align-items-center justify-content-center bg-light">
+  <div class="row w-100 shadow-lg rounded overflow-hidden" style="max-width: 900px;">
+    
+    <!-- Colonne image -->
+    <div class="col-md-6 d-none d-md-block p-0">
+      <img src="/images/basic_earth_map_continents_app.jpg" alt="Image décorative"
+           class="img-fluid h-100 w-100 object-fit-cover" style="object-fit: cover;">
+    </div>
+
+    <!-- Colonne formulaire -->
+    <div class="col-12 col-md-6 bg-white p-4">
+      <h2 class="mb-3 text-center">Créer un compte</h2>
+
+      <form [formGroup]="formProfil" (ngSubmit)="register()">
+        
+        <div class="mb-3">
+          <label for="nom" class="form-label">Nom</label>
+          <input id="nom" formControlName="nom" type="text" class="form-control" required />
+          <div *ngIf="formProfil.get('nom')?.invalid && formProfil.get('nom')?.touched" class="text-danger small">
+            Vérifiez le nom.
+          </div>
         </div>
 
-        <div class="form-group">
-          <label for="prenom">Prénom</label>
-          <input id="prenom" type="text" [(ngModel)]="prenom" name="prenom" required />
+        <div class="mb-3">
+          <label for="prenom" class="form-label">Prénom</label>
+          <input id="prenom" type="text" formControlName="prenom" class="form-control" required />
+          <div *ngIf="formProfil.get('prenom')?.invalid && formProfil.get('prenom')?.touched" class="text-danger small">
+            Vérifiez le prénom.
+          </div>
         </div>
 
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input id="email" type="email" [(ngModel)]="email" name="email" required />
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input id="email" type="email" formControlName="email" class="form-control" required />
+          <div *ngIf="formProfil.get('email')?.invalid && formProfil.get('email')?.touched" class="text-danger small">
+            Vérifiez l'adresse email.
+          </div>
         </div>
 
-        <div class="form-group">
-          <label for="password">Mot de passe</label>
-          <input id="password" type="password" [(ngModel)]="password" name="password" required />
+        <div class="mb-3">
+          <label for="password" class="form-label">Mot de passe</label>
+          <input id="password" type="password" formControlName="password" class="form-control" required />
+          <div *ngIf="formProfil.get('password')?.invalid && formProfil.get('password')?.touched" class="text-danger small">
+            Minimum 8 caractères, une majuscule, un chiffre, un caractère spécial.
+          </div>
         </div>
 
-        <div class="form-group">
-          <label for="confirmPassword">Confirmer le mot de passe</label>
-          <input id="confirmPassword" type="password" [(ngModel)]="confirmPassword" name="confirmPassword" required />
+        <div class="mb-3">
+          <label for="confirmPassword" class="form-label">Confirmer le mot de passe</label>
+          <input id="confirmPassword" type="password" formControlName="confirmPass" class="form-control" required />
+          <div *ngIf="formProfil.hasError?.('passwordMismatch') && formProfil.touched" class="text-danger small">
+            Les mots de passe ne correspondent pas.
+          </div>
         </div>
 
-        <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
-
-        <button type="submit" class="btn-primary">S'inscrire</button>
+        <div class="d-grid mt-4">
+          <button type="submit" class="btn btn-primary" [disabled]="formProfil.invalid">S'inscrire</button>
+        </div>
       </form>
     </div>
+
   </div>
 </div>
