@@ -31,7 +31,7 @@ exports.register = async (req, res) => {
       });
       
   
-      res.status(201).json({ message: 'Utilisateur créé avec succès.', user });
+      res.status(201).json({ message: 'Utilisateur créé avec succès.',   user: user.toSafeJSON() });
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
@@ -50,7 +50,7 @@ exports.login = async (req, res) => {
 
     const token = jwt.sign({ id: user.id_utilisateur, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1d' });
 
-    res.json({ token, user });
+    res.json({ token,   user: user.toSafeJSON() });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
