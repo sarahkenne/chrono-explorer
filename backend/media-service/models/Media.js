@@ -1,3 +1,5 @@
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/db');
 const Media = sequelize.define('Media', {
   id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
   description_archive: { type: DataTypes.TEXT, allowNull: false },
