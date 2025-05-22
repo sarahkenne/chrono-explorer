@@ -1,42 +1,56 @@
-<div class="timeline-wrapper">
-  <div class="timeline-container">
-    <div class="filter-container">
-      <!-- Formulaire -->
-      <h3>Filtrer par</h3>
-      <form (ngSubmit)="sortAndFilterEvents()">
-        <div class="form-group">
-          <label for="location">Lieu</label>
-          <input id="location" type="text" [(ngModel)]="filter.location" name="location" />
-        </div>
+<div class="container-fluid py-4">
+  <div class="row">
 
-        <div class="form-group">
-          <label for="civilization">Civilisation</label>
-          <input id="civilization" type="text" [(ngModel)]="filter.civilization" name="civilization" />
+    <!-- Formulaire de filtres -->
+    <div class="col-lg-3 mb-3" *ngIf="isLoggedIn">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">Filtres</h5>
+          <button class="btn btn-sm d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#filtersCollapse">
+            ▼
+          </button>
         </div>
-
-        <div class="form-group">
-          <label for="date">Date (année)</label>
-          <input id="date" type="text" [(ngModel)]="filter.date" name="date" />
+        <div class="card-body collapse show d-lg-block" id="filtersCollapse">
+          <form (ngSubmit)="sortAndFilterEvents()">
+            <div class="mb-3">
+              <label for="location" class="form-label">Lieu (ID)</label>
+              <input type="text" class="form-control" id="location" [(ngModel)]="filter.location" name="location">
+            </div>
+            <div class="mb-3">
+              <label for="civilization" class="form-label">Civilisation (ID)</label>
+              <input type="text" class="form-control" id="civilization" [(ngModel)]="filter.civilization" name="civilization">
+            </div>
+            <div class="mb-3">
+              <label for="date" class="form-label">Date (année)</label>
+              <input type="text" class="form-control" id="date" [(ngModel)]="filter.date" name="date">
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Appliquer</button>
+          </form>
         </div>
-
-        <button type="submit">Appliquer le(s) filtre(s)</button>
-      </form>
+      </div>
     </div>
 
-    <!-- Frise + Image dans la même colonne -->
-    <div class="timeline-content">
-      <div class="timeline-horizontal">
-        <div *ngFor="let event of filteredEvents" class="timeline-item">
-          <div class="date">{{ event.startDate }} - {{ event.endDate }}</div>
-          <div class="content">
-            <h2>{{ event.title }}</h2>
-            <p>{{ event.description }}</p>
-            <button class="btn-link" (click)="goToDetail(event.id)">Voir les détails</button>
+    <!-- Contenu de la timeline -->
+    <div class="col-lg-9">
+      <div class="timeline-horizontal d-flex overflow-auto py-2">
+        <div *ngFor="let event of filteredEvents" class="card m-2" style="min-width: 250px; max-width: 300px; flex: 0 0 auto;">
+          <div class="card-header bg-secondary text-white text-center fw-bold">
+            {{ event.date_debut }} - {{ event.date_fin }}
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">{{ event.titre_evenement }}</h5>
+            <p class="card-text">{{ event.description_evenement }}</p>
+            <button class="btn btn-outline-primary btn-sm w-100" (click)="goToDetail(event.id_evenement)">
+              Voir les détails
+            </button>
+            
           </div>
         </div>
       </div>
-      <div class="bottom-image">
-        <img src="/images/sl_070722_51460_17.jpg" alt="Image décorative en bas">
+
+      <!-- Image décorative en bas -->
+      <div class="text-center mt-4">
+        <img src="/images/sl_070722_51460_17.jpg" alt="Image décorative" class="img-fluid rounded shadow" style="max-height: 300px;">
       </div>
     </div>
   </div>

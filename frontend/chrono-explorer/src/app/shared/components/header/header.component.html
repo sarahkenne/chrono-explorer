@@ -1,24 +1,38 @@
-<header class="app-header">
-  <div class="container">
-    <div class="logo" (click)="goToHome()">
-      <img src="/images/20943613.jpg" alt="Logo Chrono Explorer" class="logo-img">
-      <span class="brand-name">Chrono Explorer</span>
+<header class="app-header navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <!-- Logo + nom -->
+    <a class="navbar-brand d-flex align-items-center" routerLink="/">
+      <img src="/images/20943613.jpg" alt="Logo Chrono Explorer" class="logo-img me-2" width="40" height="40">
+      <span class="fw-bold">Chrono Explorer</span>
+    </a>
+
+    <!-- Bouton hamburger -->
+    <button class="navbar-toggler" type="button" (click)="toggleMenu()" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navigation -->
+    <div [ngClass]="{ 'collapse': !menuOpen, 'navbar-collapse': true }" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/timeline" (click)="closeMenus()">Ligne du temps</a>
+        </li>
+
+        <!-- Menu utilisateur -->
+        <li class="nav-item dropdown" [class.show]="accountMenuOpen">
+          <span class="nav-link dropdown-toggle" (click)="toggleAccountMenu()" role="button">
+            👤
+          </span>
+          <ul class="dropdown-menu dropdown-menu-end" [class.show]="accountMenuOpen">
+            <li *ngIf="!isLoggedIn"><a class="dropdown-item" routerLink="/login" (click)="closeMenus()">Connexion</a></li>
+            <li *ngIf="isLoggedIn"><a class="dropdown-item" routerLink="/favorite" (click)="closeMenus()">Favoris</a></li>
+            <li *ngIf="isLoggedIn"><a class="dropdown-item" routerLink="/settings" (click)="closeMenus()">Profil</a></li>
+            <li *ngIf="isLoggedAdmin"><a class="dropdown-item" routerLink="/admin/moderation" (click)="closeMenus()">Modération</a></li>
+            <li *ngIf="isLoggedAdmin"><a class="dropdown-item" routerLink="/admin/create-event" (click)="closeMenus()">Ajouter évènement</a></li>
+            <li *ngIf="isLoggedIn"><a class="dropdown-item" (click)="logout()">Déconnexion</a></li>
+          </ul>
+        </li>
+      </ul>
     </div>
-
-    <nav class="nav-links" [class.open]="menuOpen">
-      <a (click)="goToTimeline()">Ligne du temps</a>
-      <div class="dropdown">
-        <span (click)="toggleAccountMenu()">👤</span>
-        <div class="dropdown-menu" [class.show]="accountMenuOpen">
-          <a routerLink="/login" (click)="closeMenus()">Connexion</a>
-          <a routerLink="/register" (click)="closeMenus()" >Inscription</a>
-          <a routerLink="/settings" (click)="closeMenus()">Profil</a>
-          <a routerLink="/admin/moderation" (click)="closeMenus()">Moderation</a>
-          <a routerLink="/admin/create-event" (click)="closeMenus()">ajouter evenement</a>
-        </div>
-      </div>
-    </nav>
-
-    <button class="menu-toggle" (click)="toggleMenu()">☰</button>
   </div>
 </header>

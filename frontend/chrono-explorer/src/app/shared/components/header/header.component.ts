@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoginComponent } from '../../../features/auth/pages/login/login.component';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '../../../core/services/auth-services';
+import { CommonModule } from '@angular/common';
 
 @Component({
-  imports: [RouterLink],
+  imports: [RouterLink, CommonModule],
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
@@ -12,8 +13,11 @@ import { RouterLink } from '@angular/router';
 export class HeaderComponent {
   menuOpen = false;
   accountMenuOpen = false;
+   isLoggedIn = false;
+    userName = '';
+    isLoggedAdmin= false
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
@@ -31,36 +35,26 @@ export class HeaderComponent {
     this.accountMenuOpen = false;
   }
 
-  goToHome() {
-    this.router.navigate(['/']);
-    this.closeMenus();
+  ngOnInit(): void {
+    this.authService.authStatus$.subscribe(status => {
+      this.isLoggedIn = status;
+      if (status) {
+        const user = this.authService.getCurrentUser();
+        this.userName = `${user.prenom_utilisateur} ${user.nom_utilisateur}`;
+        if(user.role == 'admin'){
+          this.isLoggedAdmin = true;
+        }
+      } else {
+        this.userName = '';
+      }
+    });
   }
 
-  goToTimeline() {
-    this.router.navigate(['/timeline']);
-    this.closeMenus();
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/login'], { replaceUrl: true })
+    this.closeMenus()
+    this.isLoggedAdmin = false;
   }
-
-  goToLogin() {
-    this.router.navigate(['/login']);
-    this.closeMenus();
-  }
-
-  goToRegister() {
-    this.router.navigate(['/register']);
-    this.closeMenus();
-  }
-  goToSetting() {
-    this.router.navigate(['/settings'])
-    this.closeMenus();
-  }
-  goToAdminPage(){
-    this.router.navigate(['/admin/moderation'])
-    this.closeMenus();
-  }
-
-  goToCreateEvent(){
-    this.router.navigate(['admin/create-event'])
-    this.closeMenus();
-  }
+ 
 }

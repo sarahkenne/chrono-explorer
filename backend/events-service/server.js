@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const cors = require("cors");
 require('dotenv').config();
 const sequelize = require('./config/db');
 const eventsRoutes = require('./routes/eventsRoutes');
@@ -7,6 +8,13 @@ const favorisRoutes = require('./routes/favorisRoutes');
 const commentairesRoutes = require('./routes/commentairesRoutes');
 
 app.use(express.json());
+
+// Ajout du CORS dans les routes
+app.use(cors({
+  origin: 'http://localhost:4200', 
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: false
+}));
 
 // Connexion à la BDD
 sequelize.authenticate()

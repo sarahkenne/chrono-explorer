@@ -1,33 +1,41 @@
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../../core/services/auth-services';
 
 @Component({
   selector: 'app-settings',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './user-settings.component.html',
   styleUrls: ['./user-settings.component.css'],
 })
-export class SettingsComponent {
-  user = {
-    firstName: 'Jean',
-    lastName: 'Dupont',
-    email: 'jean.dupont@example.com',
-    password: '',
-    confirmPassword: ''
-  };
+export class SettingsComponent implements OnInit {
+  userForm!: FormGroup;
+  user: any;
 
-  updateSettings() {
-    if (this.user.password !== this.user.confirmPassword) {
-      alert('Les mots de passe ne correspondent pas');
-      return;
-    }
-    console.log('Paramètres mis à jour', this.user);
-    alert('Paramètres mis à jour avec succès !');
+  constructor(private fb: FormBuilder, private authService: AuthService) {}
+
+  ngOnInit(): void {
+    this.user = this.authService.getCurrentUser();
+
+    this.userForm = this.fb.group({
+      prenom_utilisateur: [this.user?.prenom_utilisateur || '', Validators.required],
+      nom_utilisateur: [this.user?.nom_utilisateur || '', Validators.required],
+      adresse_email: [this.user?.adresse_email || '', [Validators.required, Validators.email]],
+      mot_de_passe: [''], // nouveau mot de passe
+      confirmPassword: [''] // confirmation
+    });
   }
 
   get firstLetter(): string {
-    return this.user.firstName.charAt(0).toUpperCase();
+    return this.user?.prenom_utilisateur?.charAt(0)?.toUpperCase() || '';
+  }
+
+  onSubmit() {
+    if (this.userForm.valid) {
+      console.log('Données à envoyer au back :', this.userForm.value);
+      // ici tu peux appeler un service pour faire un PUT/PATCH vers ton API
+    }
   }
 }

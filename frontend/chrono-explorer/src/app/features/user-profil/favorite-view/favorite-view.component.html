@@ -1,0 +1,40 @@
+<div class="container py-4">
+  <h2>Mes favoris</h2>
+
+ 
+
+  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+  <div *ngIf="favorites.length === 0 " class="alert alert-info">
+    Vous n'avez aucun favori pour le moment.
+  </div>
+
+  <div class="row g-3" *ngIf="favorites.length > 0">
+    <div *ngFor="let fav of favorites" class="col-12 col-md-6 col-lg-4">
+      <div class="card h-100 shadow-sm">
+        
+        <!-- Si tu as une image, sinon supprime cette div -->
+        <img *ngIf="fav.imageUrl" [src]="fav.imageUrl" class="card-img-top" alt="{{fav.titre || 'Événement'}}">
+
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">{{('Événement :' + fav.titre_evenement) }}</h5>
+          <p class="card-subtitle mb-2 text-muted">
+            Période : du {{ fav.date_debut ? (fav.date_debut | date:'mediumDate') : 'Date non renseignée' }}
+            au {{ fav.date_fin ? (fav.date_fin | date:'mediumDate') : 'Date non renseignée' }}
+          </p>
+          <h4>Description:</h4>
+          <p class="card-text flex-grow-1">
+            {{ fav.description_evenement ? (fav.description_evenement | slice:0:100) + '...' : 'Pas de description disponible' }}
+          </p>
+          <p class="card-text text-secondary">
+            <small>Lieu : {{ fav.id_lieu || 'Non renseigné' }}</small>
+          </p>
+
+          <button class="btn btn-danger btn-sm mt-auto" (click)="removeFavorite(fav.id_evenement)">
+            Retirer des favoris
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

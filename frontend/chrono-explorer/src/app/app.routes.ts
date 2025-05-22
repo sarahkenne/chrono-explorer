@@ -7,6 +7,7 @@ import { CommentModerationComponent } from './features/admin/pages/comment-moder
 import { EventCreateComponent } from './features/admin/pages/event-create/event-create.component';
 import { EventDetailComponent } from './features/event-detail/event-detail.component';
 import { ForgotPasswordComponent } from './features/auth/pages/forgot-password/forgot-password.component';
+import { FavoriteViewComponent } from './features/user-profil/favorite-view/favorite-view.component';
 
 export const routes: Routes = [
   {
@@ -27,6 +28,9 @@ export const routes: Routes = [
   {
     path: "timeline", component: TimelineViewComponent},
   {
-  path: 'forgot-password', component: ForgotPasswordComponent}
+  path: 'forgot-password', component: ForgotPasswordComponent},
+  {
+    path:'favorite', component: FavoriteViewComponent
+  }
 
 ];
