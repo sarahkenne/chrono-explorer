@@ -1,24 +1,25 @@
-<div class="container-fluid py-4">
-  <div class="row">
+<div class="container-fluid vh-100 overflow-hidden">
+  <div class="row h-100">
 
-    <!-- Formulaire de filtres -->
-    <div class="col-lg-3 mb-3" *ngIf="isLoggedIn">
-      <div class="card">
-        <div class="card-header d-flex justify-content-between align-items-center">
-          <h5 class="mb-0">Filtres</h5>
-          <button class="btn btn-sm d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#filtersCollapse">
-            ▼
-          </button>
+    <!-- BLOC GAUCHE FIXE -->
+    <div class="col-lg-3 bg-light border-end d-flex flex-column p-3">
+
+      <!-- Formulaire -->
+       <br>
+      <div class="card mb-3" *ngIf="isLoggedIn" style="background-image: url('/images/fond-d-ecran-colore-flou-artistique.jpg');">
+        <div class="card-header">
+          <h5 class="mb-0">🔎 Filter par</h5>
         </div>
-        <div class="card-body collapse show d-lg-block" id="filtersCollapse">
+        <div class="card-body">
           <form (ngSubmit)="sortAndFilterEvents()">
             <div class="mb-3">
-              <label for="location" class="form-label">Lieu (ID)</label>
+              <label for="location" class="form-label">Lieu</label>
               <input type="text" class="form-control" id="location" [(ngModel)]="filter.location" name="location">
             </div>
             <div class="mb-3">
-              <label for="civilization" class="form-label">Civilisation (ID)</label>
-              <input type="text" class="form-control" id="civilization" [(ngModel)]="filter.civilization" name="civilization">
+              <label for="civilization" class="form-label">Civilisation</label>
+              <input type="text" class="form-control" id="civilization" [(ngModel)]="filter.civilization"
+                name="civilization">
             </div>
             <div class="mb-3">
               <label for="date" class="form-label">Date (année)</label>
@@ -27,31 +28,57 @@
             <button type="submit" class="btn btn-primary w-100">Appliquer</button>
           </form>
         </div>
+        <a style="border: none; background: none;" routerLink="/timeline">
+            <div class="text-center mt-auto d-none d-md-block" >
+        <img src="/images/sl_070722_51460_17.jpg" alt="Image décorative" class="img-fluid rounded shadow"
+          style="max-height: 200px; object-fit: cover;">
       </div>
+    </a>
+        
     </div>
+      </div>
 
-    <!-- Contenu de la timeline -->
-    <div class="col-lg-9">
-      <div class="timeline-horizontal d-flex overflow-auto py-2">
-        <div *ngFor="let event of filteredEvents" class="card m-2" style="min-width: 250px; max-width: 300px; flex: 0 0 auto;">
-          <div class="card-header bg-secondary text-white text-center fw-bold">
-            {{ event.date_debut }} - {{ event.date_fin }}
-          </div>
-          <div class="card-body">
-            <h5 class="card-title">{{ event.titre_evenement }}</h5>
-            <p class="card-text">{{ event.description_evenement }}</p>
-            <button class="btn btn-outline-primary btn-sm w-100" (click)="goToDetail(event.id_evenement)">
-              Voir les détails
-            </button>
-            
-          </div>
+
+      
+
+   <!-- BLOC DROIT SCROLLABLE : TIMELINE -->
+<div class="col-lg-9 p-4 overflow-auto timeline-container" >
+  <div class="timeline-wrapper position-relative">
+
+    <!-- Ligne verticale centrale -->
+    <div class="timeline-line-center"></div>
+
+    <!-- Événements alternés -->
+    <div *ngFor="let event of filteredEvents; let i = index"
+     class="timeline-event-alt position-relative mb-5"
+     [ngClass]="{ 'left': i % 2 === 0, 'right': i % 2 !== 0 }"
+     [attr.data-aos]="i % 2 === 0 ? 'fade-right' : 'fade-left'"
+     data-aos-duration="1000"
+     data-aos-offset="150">
+
+      <!-- Point sur la ligne -->
+      <div class="timeline-dot-alt"></div>
+
+      <!-- Carte événement -->
+      <div class="card timeline-card shadow-lg border-0">
+        <div class="card-header text-white">
+          <strong>Du :</strong> {{ event.date_debut.split('T')[0] }} <strong>Au :</strong> {{ event.date_fin.split('T')[0] }}
+        </div>
+        <div class="card-body">
+          <h5 class="card-title fw-bold">{{ event.titre_evenement }}</h5>
+          <p class="card-text fst-italic">{{ event.description_evenement }}</p>
+          <p class="card-text"><strong>Lieu :</strong> {{ getLieuNameById(event.id_lieu) }}</p>
+          <button class="btn btn-outline-light btn-sm w-100" (click)="goToDetail(event.id_evenement)">
+            Voir les détails
+          </button>
         </div>
       </div>
 
-      <!-- Image décorative en bas -->
-      <div class="text-center mt-4">
-        <img src="/images/sl_070722_51460_17.jpg" alt="Image décorative" class="img-fluid rounded shadow" style="max-height: 300px;">
-      </div>
     </div>
+
+  </div>
+</div>
+
+
   </div>
 </div>

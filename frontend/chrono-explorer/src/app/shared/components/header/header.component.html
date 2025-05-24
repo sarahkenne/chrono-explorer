@@ -1,9 +1,10 @@
-<header class="app-header navbar navbar-expand-lg navbar-light bg-light">
+<header class="app-header navbar navbar-expand-lg navbar-light bg-light shadow-sm fixed-top">
   <div class="container-fluid">
     <!-- Logo + nom -->
     <a class="navbar-brand d-flex align-items-center" routerLink="/">
       <img src="/images/20943613.jpg" alt="Logo Chrono Explorer" class="logo-img me-2" width="40" height="40">
-      <span class="fw-bold">Chrono Explorer</span>
+      <span class="fw-bold" *ngIf="isLoggedAdmin">Chrono Explorer <span class="if_admin_account"> - Compte administrateur {{userName}}</span></span>
+      <span class="fw-bold" *ngIf="!isLoggedAdmin">Chrono Explorer</span>
     </a>
 
     <!-- Bouton hamburger -->
@@ -17,19 +18,25 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="/timeline" (click)="closeMenus()">Ligne du temps</a>
         </li>
+        <li *ngIf="isLoggedIn"><a class="nav-link" routerLink="/favorite" (click)="closeMenus()">Favoris</a></li>
+        <li *ngIf="isLoggedAdmin"><a class="nav-link" routerLink="/admin/moderation" (click)="closeMenus()">Commentaires</a></li>
+        <li *ngIf="isLoggedAdmin"><a class="nav-link" routerLink="/admin/create-event" (click)="closeMenus()">Ajouter évènement</a></li>
 
         <!-- Menu utilisateur -->
         <li class="nav-item dropdown" [class.show]="accountMenuOpen">
           <span class="nav-link dropdown-toggle" (click)="toggleAccountMenu()" role="button">
-            👤
+            <span class="avatar-circle">{{userName.charAt(0 ) | uppercase }}</span>
           </span>
           <ul class="dropdown-menu dropdown-menu-end" [class.show]="accountMenuOpen">
             <li *ngIf="!isLoggedIn"><a class="dropdown-item" routerLink="/login" (click)="closeMenus()">Connexion</a></li>
-            <li *ngIf="isLoggedIn"><a class="dropdown-item" routerLink="/favorite" (click)="closeMenus()">Favoris</a></li>
+            
             <li *ngIf="isLoggedIn"><a class="dropdown-item" routerLink="/settings" (click)="closeMenus()">Profil</a></li>
-            <li *ngIf="isLoggedAdmin"><a class="dropdown-item" routerLink="/admin/moderation" (click)="closeMenus()">Modération</a></li>
-            <li *ngIf="isLoggedAdmin"><a class="dropdown-item" routerLink="/admin/create-event" (click)="closeMenus()">Ajouter évènement</a></li>
-            <li *ngIf="isLoggedIn"><a class="dropdown-item" (click)="logout()">Déconnexion</a></li>
+            
+            <li *ngIf="isLoggedIn"><a class="dropdown-item" (click)="logout()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+  <path d="M10.09 15.59L12.67 13H3v-2h9.67l-2.58-2.59L11.5 7l5 5-5 5-1.41-1.41zM19 3H5c-1.1 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
+</svg> 
+
+</a></li>
           </ul>
         </li>
       </ul>

@@ -3,28 +3,38 @@
   <!-- Bloc principal de l'événement -->
   <div class="card position-relative mb-5" *ngIf="event; else loadingOrError">
 
-    <!-- Bouton favoris -->
-    <button class="btn btn-light position-absolute top-0 end-0 m-2 shadow-sm" (click)="toggleFavorite()">
-  <span class="fs-4" [class.text-danger]="isFavorite" [class.text-secondary]="!isFavorite">
-    {{ isFavorite ? '❤️' : '🩶' }}
-  </span>
-</button>
+  <!-- Bouton favoris -->
+  <button class="btn btn-light position-absolute top-0 end-0 m-2 shadow-sm" (click)="toggleFavorite()">
+    <span class="fs-4" [class.text-danger]="isFavorite" [class.text-secondary]="!isFavorite">
+      {{ isFavorite ? '❤' : '🤍' }}
+    </span>
+  </button>
 
+  <!-- Affichage image principale + contenu -->
+  <div class="d-flex flex-column flex-md-row">
+    
     <!-- Image principale -->
-    <img *ngIf="event.imageUrl" [src]="event.imageUrl" alt="Image principale de l'événement" class="card-img-top rounded-top">
+    <div *ngFor="let media of medias" >
+      <img 
+           *ngIf="isImage(media) && media.principal"
+           [src]="media.url"
+           [alt]="media.description_archive"
+           class="img-fluid rounded-start w-100 w-md-50 object-fit-cover" />
+    </div>
 
-    <div class="card-body">
+    <!-- Contenu texte -->
+    <div class="card-body p-4">
       <h1 class="card-title">{{ event.titre_evenement }}</h1>
       <p class="card-text"><strong>Description :</strong> {{ event.description_evenement }}</p>
 
       <ul class="list-group list-group-flush my-3">
-        <li class="list-group-item"><strong>Lieu :</strong> {{ event.id_lieu }}</li>
+        <li class="list-group-item"><strong>Lieu :</strong> {{ getLieuNameById(event.id_lieu) }}</li>
         <li class="list-group-item"><strong>Date de début :</strong> {{ event.date_debut | date:'longDate' }}</li>
         <li class="list-group-item"><strong>Date de fin :</strong> {{ event.date_fin | date:'longDate' }}</li>
-        <li class="list-group-item"><strong>Thématique :</strong> {{ event.id_thematique }}</li>
-        <li class="list-group-item"><strong>Période :</strong> {{ event.id_periode }}</li>
-        <li class="list-group-item"><strong>Catégorie :</strong> {{ event.id_categorie }}</li>
-        <li class="list-group-item"><strong>Civilisation :</strong> {{ event.id_civilisation }}</li>
+        <li class="list-group-item"><strong>Thématique :</strong> {{ getThematiqueNameById(event.id_thematique) }}</li>
+        <li class="list-group-item"><strong>Période :</strong> {{ getPeriodeNameById(event.id_periode) }}</li>
+        <li class="list-group-item"><strong>Catégorie :</strong> {{ getCategorieNameById(event.id_categorie) }}</li>
+        <li class="list-group-item"><strong>Civilisation :</strong> {{ getCivilisationNameById(event.id_civilisation) }}</li>
       </ul>
 
       <div class="mt-4">
@@ -32,30 +42,45 @@
         <p>{{ event.detailedContent }}</p>
       </div>
     </div>
+
   </div>
+</div>
+
+  
 
   <!-- Section Archives multimédia -->
   <div class="mb-5">
-    <h3>Archives multimédia</h3>
-    <div *ngIf="event.archives?.length > 0; else noArchives" class="row g-3">
-      <div *ngFor="let archive of event.archives" class="col-12 col-md-6 col-lg-4">
-        <div class="card h-100 shadow-sm">
-          <div class="card-body">
-            <ng-container [ngSwitch]="archive.type">
-              <img *ngSwitchCase="'image'" [src]="archive.url" [alt]="archive.description" class="img-fluid rounded mb-2">
-              <video *ngSwitchCase="'video'" [src]="archive.url" controls class="w-100 rounded mb-2"></video>
-              <audio *ngSwitchCase="'audio'" [src]="archive.url" controls class="w-100 mb-2"></audio>
-              <a *ngSwitchDefault [href]="archive.url" target="_blank" class="btn btn-outline-secondary mb-2 w-100">Voir le document</a>
-            </ng-container>
-            <p class="card-text">{{ archive.description }}</p>
-          </div>
-        </div>
+  <h3 class="text-lg font-semibold mb-4">Archives multimédia</h3>
+
+  <div *ngIf="medias.length > 0; else noArchives" class="flex flex-wrap gap-4">
+    <div *ngFor="let media of medias"
+         class="w-48 p-3 rounded-xl shadow-md bg-white border flex flex-col items-center">
+
+      <h5 class="text-sm font-medium text-center mb-2 truncate w-full" title="{{ media.description_archive }}">
+        {{ media.description_archive }}
+      </h5>
+
+      <!-- Affichage image -->
+      <img *ngIf="isImage(media) && !media.principal"
+           [src]="media.url"
+           [alt]="media.description_archive"
+           class="w-full h-32 object-cover rounded-md mb-2" />
+
+      <!-- Affichage archive -->
+      <div *ngIf="isArchive(media)" class="text-center mb-2">
+        <a [href]="media.url" target="_blank" class="text-blue-600 underline text-sm">
+          📎 {{ media.nom_fichier }}
+        </a>
       </div>
+
+      
     </div>
-    <ng-template #noArchives>
-      <p class="text-muted mt-2">Aucune archive disponible pour cet événement.</p>
-    </ng-template>
   </div>
+
+  <ng-template #noArchives>
+    <p class="text-muted mt-2">Aucune archive disponible pour cet événement.</p>
+  </ng-template>
+</div>
 
   <!-- Section Commentaires -->
   <div>
@@ -67,6 +92,13 @@
       </div>
       <button type="submit" class="btn btn-primary">Envoyer</button>
     </form>
+  </div>
+  <div>
+    <p style="font-size: larger;">les avis: </p>
+    <div *ngFor="let com of commentforEvent">
+      <p>🗨️ {{com.contenu}}</p>
+    </div>
+   
   </div>
 </div>
 

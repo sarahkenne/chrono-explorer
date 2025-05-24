@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EventService } from '../../../core/services/event.services';
 import { CommonModule } from '@angular/common';
 import { forkJoin } from 'rxjs';
+import { lieu } from '../../../shared/models/lieu.models';
 
 @Component({
   
@@ -14,11 +15,20 @@ export class FavoriteViewComponent implements OnInit {
   favorites: any[] = [];
   loading: boolean = false;
   errorMessage: string | null = null;
+  allLieux: lieu[] = [];
 
   constructor(private eventService: EventService) {}
 
   ngOnInit(): void {
     this.loadFavorites();
+
+    this.eventService.getLieux().subscribe({
+          next: (lieux: lieu[]) => {
+            //console.log(cat)
+            this.allLieux = lieux;
+            console.log(this.allLieux)
+          }
+        });
   }
 
   loadFavorites(): void {
@@ -29,14 +39,14 @@ export class FavoriteViewComponent implements OnInit {
     next: (fav) => {
       console.log(fav)
 
-      // Charger détails pour chaque id_evenement
+      // Chargement des détails pour chaque id_evenement
       const details$ = fav.map(f => this.eventService.getEventById(f.id_evenement));
       
       forkJoin(details$).subscribe({
         next: (events) => {
           this.favorites = events;
           this.loading = false;
-          console.log('associe a un evenement')
+          console.log('associé à un evenement.')
         },
         error: () => {
           this.errorMessage = "Erreur lors du chargement des détails des événements.";
@@ -50,6 +60,11 @@ export class FavoriteViewComponent implements OnInit {
     }
   });
 }
+
+getLieuNameById(id: number): string {
+    const found = this.allLieux.find(lieu => lieu.id_lieu === id);
+    return found ? found.nom_lieu : 'Liex inconnue';
+  }
 
   // Optionnel : supprimer un favori depuis cette page
   removeFavorite(id_evenement: number): void {

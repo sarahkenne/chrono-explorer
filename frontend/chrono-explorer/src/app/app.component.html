@@ -1,12 +1,9 @@
-<app-header></app-header>
 
+  <app-header></app-header>
 
+  <main class="flex-fill pt-5"> <!-- espace pour éviter que le header masque le contenu -->
+    <router-outlet></router-outlet>
+  </main>
 
-<main class="min-h-screen">
-  <router-outlet></router-outlet>
-</main>
+  <app-footer></app-footer>
 
-<!--<app-settings></app-settings>-->
-<!--<app-comment-moderation></app-comment-moderation>-->
-<!--<app-event-create></app-event-create>-->
-<app-footer></app-footer>

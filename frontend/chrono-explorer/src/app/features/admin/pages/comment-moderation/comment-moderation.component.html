@@ -1,19 +1,43 @@
-<div class="moderation-container">
-    <h2>Modération des Commentaires</h2>
-  
-    <div *ngIf="loading">Chargement...</div>
-  
-    <div *ngIf="!loading && comments.length === 0">
-      Aucun commentaire en attente.
+
+
+<div class="container mt-4">
+  <h2 class="text-center mb-4">Administrateur</h2>
+
+  <div class="row">
+    <!-- Colonne Image -->
+    <div class="col-md-6 mb-3 mb-md-0 d-flex justify-content-center align-items-start">
+      <img src="/images/20943801.jpg"
+           alt="Image modération commentaire"
+           class="img-fluid"
+           style="max-height: 500px; object-fit: contain; border: none; box-shadow: none;">
     </div>
-  
-    <div *ngFor="let comment of comments" class="comment-card">
-      <h3>{{ comment.eventTitle }}</h3>
-      <p>{{ comment.content }}</p>
-      <div class="actions">
-        <button (click)="approveComment(comment.id)">Valider</button>
-        <button class="reject" (click)="rejectComment(comment.id)">Rejeter</button>
+
+    <!-- Colonne Commentaires -->
+    <div class="col-md-6">
+      <h4 class="mb-3">Commentaires en attente</h4>
+
+      <div *ngIf="isLoading" class="alert alert-secondary">Chargement des commentaires...</div>
+      <div *ngIf="!isLoading && pendingCommentaires.length === 0" class="alert alert-info">
+        Aucun commentaire en attente.
+      </div>
+
+      <!-- Zone scrollable -->
+      <div style="max-height: 500px; overflow-y: auto; padding-right: 8px;">
+        <div *ngFor="let comment of pendingCommentaires" class="card mb-3 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">{{ getTitre(comment.id_evenement) }}</h5>
+            <p class="card-text">{{ comment.contenu }}</p>
+            <div class="d-flex gap-2">
+              <button class="btn btn-sm btn-success" (click)="valider(comment.id_commentaire)" title="Valider">
+                <span>✔️</span>
+              </button>
+              <button class="btn btn-sm btn-danger" (click)="refuser(comment.id_commentaire)" title="Rejeter">
+                <span>❌</span>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  
+</div>

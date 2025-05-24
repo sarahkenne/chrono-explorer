@@ -27,7 +27,7 @@
             {{ fav.description_evenement ? (fav.description_evenement | slice:0:100) + '...' : 'Pas de description disponible' }}
           </p>
           <p class="card-text text-secondary">
-            <small>Lieu : {{ fav.id_lieu || 'Non renseigné' }}</small>
+            <small>Lieu : {{ getLieuNameById(fav.id_lieu) || 'Non renseigné' }}</small>
           </p>
 
           <button class="btn btn-danger btn-sm mt-auto" (click)="removeFavorite(fav.id_evenement)">

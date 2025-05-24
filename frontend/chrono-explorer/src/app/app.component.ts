@@ -10,6 +10,9 @@ import { CommentModerationComponent } from './features/admin/pages/comment-moder
 import { EventCreateComponent } from './features/admin/pages/event-create/event-create.component';
 import { EventDetailComponent } from './features/event-detail/event-detail.component';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import * as AOS from 'aos';
+
+
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, 
@@ -29,4 +32,11 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 })
 export class AppComponent {
   title = 'chrono-explorer';
+ 
+  
+  
+  ngOnInit() {
+
+  AOS.init();
+}
 }

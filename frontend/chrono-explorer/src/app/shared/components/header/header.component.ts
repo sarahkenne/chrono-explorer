@@ -17,7 +17,7 @@ export class HeaderComponent {
     userName = '';
     isLoggedAdmin= false
 
-  constructor(private router: Router, private authService: AuthService) {}
+    constructor(private router: Router, private authService: AuthService) {}
 
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
@@ -40,12 +40,12 @@ export class HeaderComponent {
       this.isLoggedIn = status;
       if (status) {
         const user = this.authService.getCurrentUser();
-        this.userName = `${user.prenom_utilisateur} ${user.nom_utilisateur}`;
+        this.userName = `${user.prenom_utilisateur}`;
         if(user.role == 'admin'){
           this.isLoggedAdmin = true;
         }
       } else {
-        this.userName = '';
+        this.isLoggedAdmin= false;
       }
     });
   }
