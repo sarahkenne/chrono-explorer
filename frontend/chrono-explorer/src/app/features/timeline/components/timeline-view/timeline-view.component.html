@@ -36,13 +36,35 @@
     </a>
         
     </div>
+
+    <div *ngIf="!isLoggedIn">
+  <p class="welcome-text">
+    🕰️ Bienvenue sur Chrono Explorer !<br>
+    Plongez dans l’histoire autrement.
+    Chrono Explorer vous invite à voyager à travers les époques, les civilisations et les thématiques culturelles majeures. Explorez une collection d’événements marquants enrichis de photos, d’archives multimédias et de commentaires de passionnés.
+    <br>
+    📌 Que pouvez-vous faire sur Chrono Explorer ?<br>
+    🔍 <b>Explorer des événements historiques :</b> chaque fiche vous offre un aperçu complet avec images, lieux, périodes, thématiques et plus encore.
+
+    🖼️<b>Découvrir des archives multimédia :</b> visualisez des documents rares, des illustrations et des ressources associées. <br>
+
+    <b>❤️Ajouter vos événements en favoris :</b> gardez une trace de vos explorations favorites. <br>
+
+    <b>💬Laisser un commentaire :</b> partagez vos impressions et interagissez avec la communauté. <br>
+
+    
+  <b> <i> "L’Histoire ne s’écrit pas seulement dans les livres, elle se découvre dans chaque archive."</i> </b>
+  </p>
+</div>
       </div>
 
 
-      
+      <br>
 
    <!-- BLOC DROIT SCROLLABLE : TIMELINE -->
 <div class="col-lg-9 p-4 overflow-auto timeline-container" >
+  <br>
+  <h2>🚀Commencez votre exploration dès maintenant :</h2>
   <div class="timeline-wrapper position-relative">
 
     <!-- Ligne verticale centrale -->
@@ -77,6 +99,7 @@
     </div>
 
   </div>
+  <br>
 </div>
 
 

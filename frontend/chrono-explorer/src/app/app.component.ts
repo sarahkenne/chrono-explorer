@@ -18,14 +18,7 @@ import * as AOS from 'aos';
   imports: [RouterOutlet, 
     HeaderComponent, 
     FooterComponent,
-    SettingsComponent,
-    TimelineViewComponent, 
-    LoginComponent,
-    EventCreateComponent,
-    CommentModerationComponent,
-    RegisterComponent,
-    EventDetailComponent,
-    RouterLink, RouterLinkActive
+    
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'

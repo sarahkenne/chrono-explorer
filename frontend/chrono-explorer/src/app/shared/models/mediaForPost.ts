@@ -6,5 +6,5 @@ export interface mediaPost{
     nom_fichier: File,
     url: string,
     id_evenement: number,
-    principal: boolean,
+    principal: string,
 }

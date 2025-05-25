@@ -32,9 +32,11 @@ export class EventCreateComponent implements OnInit {
   editedEventId: number | null = null;
   currentEventUpdating : CollectionEventPost[] = [];
   selectedImage: File | null = null;
+  selectedPImage: File | null = null;
   selectedArchives: File[] = [];
   categories: string[] = [];
   civilizations: string[] = [];
+  ifImagePrincipale = '';
 
   formProfil = new FormGroup({
   id_eveneent: new FormControl<number | null>(null),
@@ -168,11 +170,17 @@ submitEvent() {
         alert(`Événement " ${data.titre_evenement}" ajouté !`);
         this.formProfil.reset();
 
-        // ✅ Upload de les media (si présente)
+        // Upload des media (image, pdf, audio, video)
         if (this.selectedImage && eventId) {
           //console.log(eventId, this.selectedImage)
           
-          this.uploadArchive(this.selectedImage, eventId, 'image');
+          this.uploadArchive(this.selectedImage, eventId, 'archive');
+        }
+        if(this.selectedPImage && eventId){
+          this.ifImagePrincipale = 'true'
+
+          console.log(this.selectedPImage, this.ifImagePrincipale)
+          //this.uploadArchive(this.selectedPImage, eventId, 'image')
         }
 
 
@@ -209,6 +217,7 @@ submitEvent() {
           
           this.uploadArchive(this.selectedImage, this.editedEventId, 'image');
         }
+        
         this.resetForm();
       },
       error: err => {
@@ -235,7 +244,7 @@ uploadArchive(fichier: File, eventId: number, type: 'image' | 'archive'): void {
     nom_fichier: fichier,
     url: '', 
     id_evenement: eventId,
-    principal: true,
+    principal: this.ifImagePrincipale,
   };
 
   const formData = new FormData();
@@ -243,6 +252,7 @@ uploadArchive(fichier: File, eventId: number, type: 'image' | 'archive'): void {
   formData.append('id_evenement', media.id_evenement.toString());
   formData.append('type_archive', media.type_archive);
   formData.append('description_archive', media.description_archive);
+  formData.append('principal', media.principal? 'true' : 'false');
 
   this.mediaService.uploadMedia(formData).subscribe({
     next: res => console.log(`Fichier ${media.description_archive} uploadé avec succès.`),
@@ -250,11 +260,19 @@ uploadArchive(fichier: File, eventId: number, type: 'image' | 'archive'): void {
   });
 }
 
-//toogles des fichier chargés dans mes imput archive multimedia et image
+//toogles des fichier chargés dans mes imput archive multimedia et image(autre que principale)
 onImageSelected(event: Event): void {
   const input = event.target as HTMLInputElement;
   if (input.files && input.files.length > 0) {
     this.selectedImage = input.files[0];
+    //console.log(input)
+  }
+}
+
+onImagePrincSelected(event: Event): void {
+  const input = event.target as HTMLInputElement;
+  if (input.files && input.files.length > 0) {
+    this.selectedPImage = input.files[0];
     //console.log(input)
   }
 }

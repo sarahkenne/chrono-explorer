@@ -1,4 +1,28 @@
+p.welcome-text {
+  background-color: #f9f6f1;
+  border-left: 5px solid #4e84e9; /* couleur bronze/doré */
+  padding: 1.5rem;
+  margin: 2rem 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #333;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  white-space: pre-line; /* pour respecter les sauts de ligne s'il y en a */
+  text-align: justify;
+}
+
+
+
+
 /* BLOC TIMELINE */
+
+
+
+
+
+
 .timeline-container {
   height: 100vh;
   overflow-y: auto;

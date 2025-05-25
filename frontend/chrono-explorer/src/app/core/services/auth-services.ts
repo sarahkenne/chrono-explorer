@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { userAuth } from '../../shared/models/auth.models'; 
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -42,6 +43,7 @@ export class AuthService {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     this.authStatus.next(false);
+    
   }
 
   // Vérification du token
